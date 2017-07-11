@@ -17,18 +17,25 @@ class uyeol{
 		$tarih = date("Y.m.d H:i:s");
 		$dogumtarih=$_POST["dogumtarih"];
 		$resim=$_FILES["resim"]["name"];
-		$type=$_FILES["resim"]["type"];
-		$tmpresim=$_FILES["resim"]["tmp_name"];
 		
-
+		$tmpresim=$_FILES["resim"]["tmp_name"];
+$type=$_FILES["resim"]["type"];
 		$uzanti=end(explode(".",$resim));
-		$konum="web/app/assets/image/kullaniciavatar/".$kullaniciadi.".".$uzanti;
+		$konum="/web/app/assets/image/kullaniciavatar/".$kullaniciadi.".".$uzanti;
 		$type=$_FILES["resim"]["type"];
+
+
+	loadView("Kullanici/uyeol.php");
+		
+		
 		$uyeol=new DBKullanici();
 
+
+		
+		
+		
 		$hata=false;
 		$hatalar=array();
-		
 		if((preg_match("/^([A-Za-zÇŞĞÜÖİçşğüöı])+$/",$adi) === 0) && (preg_match("/^([A-Za-zÇŞĞÜÖİçşğüöı])+$/",$soyadi) === 0)){
 			$hatalar[]="Ad veya Soyad Yanlış Girdiniz!";
 			$hata=true;
@@ -42,7 +49,7 @@ class uyeol{
 			$hata=true;
 		}
 		if($uyeol->uyekontrol($kullaniciadi,$eposta) === false){
-			$hatalar[] = "Girdiniz E-mail veya Kullanici Adını Başka biri Kullanıyor!";
+			$hatalar[] = "Girdiğiniz E-mail veya Kullanici Adını Başka biri Kullanıyor!";
 			$hata=true;
 		}
 		if(empty($adi) || empty($soyadi) || empty($sifre) || empty($_POST["tekrarsifre"])
@@ -62,31 +69,42 @@ class uyeol{
 			$hatalar[] =  "Sadece png,jpg ve jpeg tipinde Resim Yükleyebilirsiniz!";
 			$hata = true;
 		}
+
+		
+		
 		if(empty($resim)){
 			$konum="";
-		}		
+		}
 		if(strtotime($dogumtarih)>strtotime(date("Y:m:d H:i:s"))){
 			$hata = true;
 			$hatalar[] = "Doğum Tarihi Yanlış Girildi!";
 		}
-		//*********
-		if (move_uploaded_file($_FILES["resim"]["tmp_name"],$yeni_ad)){
-						echo 'Dosya başarıyla yüklendi.';
-						
-						
-		}
-		//*********
+
+
 		if($hata === false){
 			if(!empty($resim)){
-				$kayitlar=array("tmpresim"=>$tmpresim,"type"=>$type,"konum"=>$konum);
-				loadController("grafik.php",$kayitlar);
-				
+					
+					// commit ettik fakat lakin çalışmıyor.
+				if (move_uploaded_file($tmpresim,$konum)){
+				echo 'Dosya başarıyla yüklendi.';
+			}else{
+			echo 'Dosya Yüklenemedi!';
 			}
+		
+		
+		
+				$kayitlar=array("tmpresim"=>$tmpresim,"type"=>$type,"konum"=>$konum);
+				
+				loadController("grafik.php",$kayitlar);
+			}		
 			$adsoyad=$adi." ".$soyadi;
 			$yetki=4;
 			$uyeol->uyeOl($adsoyad,$kullaniciadi,$sifre,$eposta,$tarih,$konum,$yetki,$dogumtarih);
 
-			header("Location:giris.php");
+			
+			
+			
+			//header("Location:giris.php");
 		}
 		else {
 			loadView("hatalar.php",$hatalar);
@@ -98,7 +116,7 @@ if(!$_POST){
 	loadView("Kullanici/uyeol.php");
 }
 else{
-	loadView("Kullanici/uyeol.php");
+
 	$kayit->uyekayit();
 }
 echo "</div>";

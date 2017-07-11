@@ -1,0 +1,82 @@
+body{
+
+    background-image: url("../image/at.svg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+
+
+li.dropdown .badge{
+
+    background-color: #5BA1D5;
+}
+
+
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    right: 100% !important;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+/* scrollpane ayarları başlangıç*/
+body {
+    scrollbar-face-color: green;
+    scrollbar-highlight-color: blue;
+    scrollbar-3dlight-color: red;
+    scrollbar-darkshadow-color: yellow;
+    scrollbar-shadow-color: grey;
+    scrollbar-arrow-color: purple;
+    scrollbar-track-color: pink;
+}
+
+#comments_block {
+    overflow: auto;
+    width: auto;
+    height: 200px;
+}
+
+/* scrollpane ayarları bitiş */
